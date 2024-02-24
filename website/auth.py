@@ -1,5 +1,8 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 from .regex import check_regex
+from .models import User
+from . import db
 
 auth = Blueprint('auth', __name__)
 
@@ -31,7 +34,12 @@ def register():
 
         # Else create user
         else:
+            new_user = User(email=email, username=username, password=generate_password_hash(password1, method='pbkdf2:sha256'))
+            db.session.add(new_user)
+            db.session.commit()
             flash('Your account has been created', category='success')
-            pass
+
+            return redirect(url_for('views.home'))
+
 
     return render_template("register.html")
