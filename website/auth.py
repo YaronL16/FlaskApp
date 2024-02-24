@@ -34,7 +34,7 @@ def login():
             flash('This user does not exist', category='error')
 
     # Fore GET request
-    return render_template("login.html", text="Tamar")
+    return render_template("login.html", user=current_user)
 
 @auth.route('/logout')
 @login_required
@@ -79,4 +79,4 @@ def register():
             return redirect(url_for('views.home'))
 
     # For GET request
-    return render_template("register.html")
+    return render_template("register.html", user=current_user)

@@ -5,5 +5,19 @@ Home
 {%endblock %}
 
 {% block content %}
-<h1>This is the home page</h1>
+<br />
+<h1 align="center">Notes</h1>
+<ul class="list-group list-group-flush" id="Notes">
+    {% for note in user.notes %}
+    <li class="list-group-item">{{ note.text }}</li>
+    {% endfor %}
+</ul>
+
+<form method="POST">
+    <textarea name="note" id="note" class="form-control"></textarea>
+    <br />
+    <div aligh="center">
+        <button type="submit" class="btn btn-primary">Add Note</button>
+    </div>
+</form>
 {% endblock %}
