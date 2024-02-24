@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 
@@ -13,10 +14,8 @@ def create_app():
     # Define encryption key
     app.config['SECRET_KEY'] = 'ogni tua piccola lacrima e oceano sopra il mio viso'
 
-    # Define database file location
+    # Define DB file location and link flask app to DB
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-
-    # Define Flask app for the database
     db.init_app(app)
 
     # Import and register blueprints
@@ -28,6 +27,15 @@ def create_app():
     # Set up database
     from .models import User, Note
     create_database(app)
+
+    # Setup login manager
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
 
