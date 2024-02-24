@@ -1,36 +1,34 @@
 {% extends "base.html" %}
 
 <!-- Title-->
-{% block title %}
-Register
-{%endblock %}
+{% block title %} Register {%endblock %}
 
 <!-- Main-->
 {% block content %}
 <form method="POST">
-    <br />
-    <h3 align="center">Sign Up</h3>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input 
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="Enter email"
-        />
-    </div>
-    <div class="form-group">
-        <label for="username">User Name</label>
-        <input 
-            type="text"
-            class="form-control"
-            id="username"
-            name="username"
-            placeholder="Enter your Username"
-        />
-    </div>
-    <!-- Last Name
+  <br />
+  <h3 align="center">Sign Up</h3>
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Enter email"
+    />
+  </div>
+  <div class="form-group">
+    <label for="username">User Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      name="username"
+      placeholder="Enter your Username"
+    />
+  </div>
+  <!-- Last Name
     <div class="form-group">
         <label for="lastName">Last Name</label>
         <input 
@@ -42,30 +40,27 @@ Register
         />
     </div>
     -->
-    <div class="form-group">
-        <label for="password1">Password</label>
-        <input 
-            type="password"
-            class="form-control"
-            id="password1"
-            name="password1"
-            placeholder="Enter a password"
-        />
-    </div>
-    <div class="form-group">
-        <label for="password2">Confirm Password</label>
-        <input 
-            type="password"
-            class="form-control"
-            id="password2"
-            name="password2"
-            placeholder="Enter the password again"
-        />
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Submit</button>
-
-
+  <div class="form-group">
+    <label for="password1">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password1"
+      name="password1"
+      placeholder="Enter a password"
+    />
+  </div>
+  <div class="form-group">
+    <label for="password2">Confirm Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password2"
+      name="password2"
+      placeholder="Enter the password again"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 {% endblock %}
