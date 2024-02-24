@@ -11,7 +11,7 @@ Home
     {% for note in user.notes %}
     <li class="list-group-item">
         {{ note.text }}
-        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+        <button type="button" class="close" onclick="deleteNote({{ note.id }})">
             <span aria-hidden="true">&times;</span>
         </button>
     </li>
@@ -21,7 +21,7 @@ Home
 <form method="POST">
     <textarea name="note" id="note" class="form-control"></textarea>
     <br />
-    <div aligh="center">
+    <div align="center">
         <button type="submit" class="btn btn-primary">Add Note</button>
     </div>
 </form>
