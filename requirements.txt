@@ -2,5 +2,6 @@ flask==2.3.3
 flask_login
 flask_sqlalchemy
 flask_redmail
-pyjtw
+pyjwt
 # modules like os, re, json are included with python
+# possible werkzeug.security (might be included in flask)

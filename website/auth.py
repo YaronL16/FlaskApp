@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .regex import check_regex
 from .models import User
 from . import emailer, db
-import json
 import jwt
 
 auth = Blueprint('auth', __name__)
