@@ -12,11 +12,14 @@ def home():
     if request.method == 'POST':
         note = request.form.get('note')
 
-    # Check note is not empty
-        if len(note) < 1:
+    # Check User is verified and that note is not empty
+        if not current_user.verified:
+            flash('Your account must be verified to start using my website. Check your email for the verification link.', category='error')
+        
+        elif len(note) < 1:
             flash('Note is empty', category='error')
 
-        # Create note
+        # If all is good, Create note
         else:
             new_note = Note(text=note, owner=current_user.id)
             db.session.add(new_note)
