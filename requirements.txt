@@ -4,4 +4,4 @@ flask_sqlalchemy
 flask_redmail
 pyjwt
 # modules like os, re, json are included with python
-# possible werkzeug.security (might be included in flask)
+# possible need to install werkzeug.security (might be included in flask)
