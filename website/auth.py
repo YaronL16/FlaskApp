@@ -1,11 +1,14 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .regex import check_regex
 from .models import User
-from . import db
+from . import emailer, db
+import json
+import jwt
 
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -36,11 +39,13 @@ def login():
     # Fore GET request
     return render_template("login.html", user=current_user)
 
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -68,15 +73,43 @@ def register():
         elif len(password1) < 7:
             flash('Please use a vaild password', category='error')
 
-        # If all is good, create the user and log in
+        # If all is good, create the user
         else:
-            new_user = User(email=email, username=username, password=generate_password_hash(password1, method='pbkdf2:sha256'))
+            new_user = User(email=email, username=username, verified=False, password=generate_password_hash(password1, method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
 
-            login_user(new_user, remember=True)
-            flash('Your account has been created', category='success')
-            return redirect(url_for('views.home'))
+            # Create a secure token that identifies the user
+            token = jwt.encode({"email": email}, current_app.config["SECRET_KEY"], algorithm="HS256")
 
-    # For GET request
+            # Send verification email
+            emailer.send(
+                subject="Verify e-mail for Yaron website",
+                receivers=email,
+                html_template="email/verify.html",
+                body_params={
+                    "token": token
+                }
+            )
+
+            login_user(new_user, remember=True)
+            flash('Your account has been created, check your e-mail inbox to verify your account.', category='success')
+            return redirect(url_for('views.home'))
+    
+    # For GET or failed POST requests
     return render_template("register.html", user=current_user)
+
+
+@auth.route("/verify-email/<token>")
+def verify_email(token):
+    # get email address imbedded in the URL
+    data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+    email = data["email"]
+
+    # Verify user that matches the email address
+    user = User.query.filter_by(email=email).first()
+    user.verified = True
+    db.session.commit()
+
+    flash('Email verification successful!', 'success')
+    return redirect(url_for('auth.login'))

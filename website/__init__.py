@@ -1,11 +1,15 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_redmail import RedMail
 from os import path
 
 # Define Database
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+# Define Emailer
+emailer = RedMail()
 
 # Create Flask App
 def create_app():
@@ -28,14 +32,21 @@ def create_app():
     from .models import User, Note
     create_database(app)
 
-    # Setup login manager
+    # Setup login manager and tell it how to get user objects
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
+    
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
+    
+    # Set up email for app
+    app.config["EMAIL_HOST"] = "smtp.gmail.com"
+    app.config["EMAIL_PORT"] = 587
+    app.config["EMAIL_USERNAME"] = "flaskyaron@gmail.com"
+    app.config["EMAIL_PASSWORD"] = "ustq nwai yzxy mnsr"
+    emailer.init_app(app)
 
     return app
 
