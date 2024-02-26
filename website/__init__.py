@@ -48,6 +48,9 @@ def create_app():
     app.config["EMAIL_PASSWORD"] = "ustq nwai yzxy mnsr"
     emailer.init_app(app)
 
+    # Define external IP address / hostname
+    app.config['SERVER_NAME'] = 'localhost'
+
     return app
 
 def create_database(app):
