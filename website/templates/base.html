@@ -4,14 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- importing bootstrap CDN for css classes and fonts-->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/font-awesome.min.css') }}"
-    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    
     <!-- importing my own css-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     
@@ -31,7 +25,7 @@
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="home" href="/" style="margin-left: 10px;">Home</a>
           <a class="nav-item nav-link" id="profile" href="/profile">Profile</a>
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
@@ -46,19 +40,15 @@
     {% if messages %}
       {% for category, message in messages %}
         {% if category =='error' %}
-          <div class="alert alert-danger alert-dismissable fase show" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ message}}
-            <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
 
           {% else %}
-          <div class="alert alert-success alert-dismissable fase show" role="alert">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ message}}
-            <button type="button" class="close" data-dismiss="alert">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           {% endif %}
       {% endfor %}
@@ -71,19 +61,14 @@
     </div>
 
     <!-- Importing JS needed for Bootstrap-->
-    <script
-      src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"
-    ></script>
-    <script
-      src="{{ url_for('static', filename='js/popper.min.js') }}"
-    ></script>
-    <script
-      src="{{ url_for('static', filename='js/bootstrap.min.js') }}"
-    ></script>
+    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/index.js') }}"
     ></script>
+    <script src="{{ url_for('static', filename='js/fontawesme.js') }}"></script>
 
   </body>
 </html>
