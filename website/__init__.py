@@ -49,7 +49,7 @@ def create_app():
     emailer.init_app(app)
 
     # Define external IP address / hostname
-    app.config['SERVER_NAME'] = 'localhost'
+    # app.config['SERVER_NAME'] = '127.0.0.1'
 
     return app
 
