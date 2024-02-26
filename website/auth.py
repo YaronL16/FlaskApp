@@ -71,7 +71,6 @@ def register():
             flash('Your passwords do not match', category='error')
         elif len(password1) < 7:
             flash('Please use a vaild password', category='error')
-
         # If all is good, create the user
         else:
             new_user = User(email=email, username=username, verified=False, password=generate_password_hash(password1, method='pbkdf2:sha256'))
