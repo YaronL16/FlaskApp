@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tamar
+{%endblock %}
+
+{% block content %}
+<br />
+<h1 align="center">Tamar</h1>
+<br/>
+<p align="center">Tamar wanted a special page to write how much she appreciates me</p>
+<p align="center">For everyone to see</p>
+<br/>
+<p align="center">You're welcome Tamar</p>
+<ul class="list-group list-group-flush" id="Notes">
+    {% for compliment in compliments %}
+    <li class="list-group-item d-flex justify-content-between">
+        {{ compliment.text }}
+        <button type="button" class="btn-close" onclick="deleteCompliment({{ compliment.id }})"></button>
+    </li>
+    {% endfor %}
+</ul>
+
+<form method="POST">
+    <textarea name="compliment" id="compliment" class="form-control"></textarea>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add Compliment</button>
+    </div>
+</form>
+
+<br/>
+<div style="text-align: center;">
+<img src="{{ url_for('static', filename='img/Tamar.jpg') }}" alt="Sexy Creator" style="width: 75%; height: auto;">
+<br>
+</div>
+
+<a href="#" 
+class="scrollbutton" 
+id="scrollbuttonid"> 
+ Back To Top
+</a> 
+
+<script src="{{ url_for('static', filename='js/back2top button.js') }}"></script>
+
+{% endblock %}

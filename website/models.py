@@ -17,3 +17,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150))
     verified = db.Column(db.Boolean, default=False)
     notes = db.relationship('Note')
+
+# Define compliment schema
+class Compliment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(10000))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    

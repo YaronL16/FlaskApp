@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from . import db
-from .models import Note
+from .models import Note, Compliment
 import json
 
 views = Blueprint('views', __name__)
@@ -58,3 +58,46 @@ def profile():
                            verification_status=verification_status,
                            username=username,
                            email=email,)
+
+@views.route('/tamar', methods=['GET', 'POST'])
+@login_required
+def tamar():
+    if request.method == 'POST':
+        compliment = request.form.get('compliment')
+
+    # Check user is verify and compliment is not empty
+        if not current_user.verified:
+            flash('Your account must be verified to start using my website. Check your email for the verification link.', category='error')
+
+        elif len(compliment) < 1:
+            flash('Note is empty', category='error')
+
+        # If all is good, Create Compliment
+        else:
+            new_compliment = Compliment(text=compliment)
+            db.session.add(new_compliment)
+            db.session.commit()    
+            flash('Compliment added', category='success')
+    
+    # Get all compliments
+    if current_user.is_authenticated:
+        compliments = Compliment.query.all()
+
+    return render_template('tamar.html',
+                           user=current_user,
+                           compliments=compliments)
+
+@views.route('/delete-compliment', methods=['POST'])
+@login_required
+def delete_compliment():
+    compliment = json.loads(request.data)
+    complimentId = compliment['complimentId']
+    compliment = Compliment.query.get(complimentId)
+    if compliment:
+        if current_user.username == "yaron":
+            db.session.delete(compliment)
+            db.session.commit()
+        else:
+            flash('Only Yaron can choose to delete Compliments.', category='error')
+
+    return jsonify({})

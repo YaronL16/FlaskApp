@@ -7,7 +7,9 @@ Home
 {% block content %}
 <br />
 <h1 align="center">Notes</h1>
-<p align="center">Type your note below</p>
+<br/>
+<p align="center">Type your note below.</p>
+<p align="center">Other users will not be able to see your notes.</p>
 <ul class="list-group list-group-flush" id="Notes">
     {% for note in user.notes %}
     <li class="list-group-item d-flex justify-content-between">

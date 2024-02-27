@@ -6,3 +6,12 @@ function deleteNote(noteId) {
     window.location.href = "/";
   });
 }
+
+function deleteCompliment(complimentId) {
+  fetch("/delete-compliment", {
+    method: "POST",
+    body: JSON.stringify({ complimentId: complimentId }),
+  }).then((_res) => {
+    window.location.href = "/tamar";
+  });
+}
